@@ -1,5 +1,5 @@
 class RecordsController < ApplicationController
-  before_action :set_record, only: %i[show edit update destroy]
+  before_action :set_record, only: %i[show edit update destroy publish]
 
   # GET /records
   def index
@@ -41,6 +41,18 @@ class RecordsController < ApplicationController
   def destroy
     @record.destroy!
     redirect_to records_path, notice: "Record was successfully destroyed.", status: :see_other
+  end
+
+  # POST /records/1/publish
+  def publish
+    response = DataMarketplaceConnector.create(@record) # rubocop:disable Rails/SaveBang
+    if response.success?
+      redirect_to @record, notice: "Record successfully published to Data Marketplace"
+    else
+      body = JSON.parse(response.body)
+      Rails.logger.error "Publishing to Data Market place failed for record #{@record.id}: #{body}"
+      redirect_to @record, alert: "Record publishing to Data Marketplace failed: #{body['message']}"
+    end
   end
 
 private
