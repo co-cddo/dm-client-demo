@@ -2,13 +2,31 @@
 
 <h1 class="govuk-heading-l">Records</h1>
 
-<div id="records">
-  <% @records.each do |record| %>
-    <%= render record %>
-    <p class="govuk_body">
-      <%= govuk_link_to "Show this record", record %>
-    </p>
-  <% end %>
-</div>
-
 <%= govuk_link_to "New record", new_record_path %>
+
+<div id="records">
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Name</th>
+        <th scope="col" class="govuk-table__header">Vaild?</th>
+        <th scope="col" class="govuk-table__header">Link</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% @records.each do |record| %>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <%= record.name %>
+          </td>
+          <td class="govuk-table__cell">
+            <%#= valid_record_tag(record) %>
+          </td>
+          <td class="govuk-table__cell">
+            <%= link_to "Show this record", record %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
