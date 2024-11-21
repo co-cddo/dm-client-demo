@@ -7,7 +7,7 @@
   </pre>
 
   <div>
-    <%#= govuk_button_to "Publish this record", @record, method: :delete, warning: true %>
+    <%= govuk_button_to "Publish this record", publish_record_path(@record), warning: true %>
   </div>
 
   <div class="govuk-!-padding-bottom-2">

@@ -18,7 +18,12 @@
 
   <div>
     <%= form.label :metadata, style: "display: block" %>
-    <%= form.text_field :metadata %>
+    <%= form.textarea(
+          :metadata,
+          cols: 120,
+          rows: 20,
+          value: (JSON.generate(record.metadata).html_safe if record.metadata?)
+        ) %>
   </div>
 
   <div>

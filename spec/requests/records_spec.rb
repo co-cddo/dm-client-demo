@@ -101,4 +101,42 @@ RSpec.describe "/records", type: :request do
       expect(response).to redirect_to(records_url)
     end
   end
+
+  describe "POST /:id/publish" do
+    let(:success) { true }
+    let(:body) { "" }
+    let(:dm_response) { OpenStruct.new(success?: success, body:) }
+    before do
+      expect(DataMarketplaceConnector).to receive(:create).with(record).and_return(dm_response)
+    end
+
+    it "pushes the data to Data Marketplace and shows results" do
+      post publish_record_url(record)
+      expect(response).to redirect_to(record)
+    end
+
+    it "displays message" do
+      post publish_record_url(record)
+      follow_redirect!
+      expect(response.body).to include("Record successfully published to Data Marketplace")
+    end
+
+    context "with failure" do
+      let(:success) { false }
+      let(:message) { Faker::Lorem.sentence }
+      let(:body) { { message: }.to_json }
+
+      it "pushes the data to Data Marketplace and shows results" do
+        post publish_record_url(record)
+        expect(response).to redirect_to(record)
+      end
+
+      it "displays message" do
+        post publish_record_url(record)
+        follow_redirect!
+        expect(response.body).not_to include("Record successfully published to Data Marketplace")
+        expect(response.body).to include(message)
+      end
+    end
+  end
 end
