@@ -16,7 +16,7 @@ class DataMarketplaceConnector
     @token ||= begin
       response = Faraday.post(
         "https://apitest.datamarketplace.gov.uk/v1/clientauth/get-token",
-        Rails.application.credentials.dm_api.to_json,
+        Rails.configuration.dm_api.to_json,
         "Content-Type" => "application/json",
       )
       json = JSON.parse(response.body)
