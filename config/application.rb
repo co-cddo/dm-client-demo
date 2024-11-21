@@ -39,8 +39,8 @@ module DmClientDemo
     # Don't generate system test files.
     config.generators.system_tests = nil
 
-    dm_client_id = ENV.fetch("DM_CLIENT_ID", Rails.application.credentials.dm_api["clientId"])
-    dm_client_secret = ENV.fetch("DM_CLIENT_SECRET", Rails.application.credentials.dm_api["clientSecret"])
+    dm_client_id = ENV.fetch("DM_CLIENT_ID", Rails.application.credentials&.dm_api&.fetch(:clientId, "id"))
+    dm_client_secret = ENV.fetch("DM_CLIENT_SECRET", Rails.application.credentials&.dm_api&.fetch(:clientSecret, "secret"))
 
     config.dm_api = {
       clientId: dm_client_id,

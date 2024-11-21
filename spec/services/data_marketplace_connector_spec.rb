@@ -8,7 +8,7 @@ RSpec.describe DataMarketplaceConnector, type: :service do
     before do
       stub_request(:post, "https://apitest.datamarketplace.gov.uk/v1/clientauth/get-token")
          .with(
-           body: Rails.application.credentials.dm_api.to_json,
+           body: Rails.configuration.dm_api.to_json,
            headers: { "Content-Type" => "application/json" },
          )
          .to_return(status: 200, body: { token: }.to_json)
