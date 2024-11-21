@@ -1,0 +1,5 @@
+class AddJsonValidToRecords < ActiveRecord::Migration[8.0]
+  def change
+    add_column :records, :json_valid, :boolean
+  end
+end

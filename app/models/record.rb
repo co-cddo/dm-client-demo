@@ -1,5 +1,5 @@
 class Record < ApplicationRecord
-  before_validation :json_parse_metadata
+  before_validation :json_parse_metadata, :store_metadata_validation
 
   validates :name, :metadata, presence: true
 
@@ -10,5 +10,9 @@ class Record < ApplicationRecord
     self.metadata = JSON.parse(metadata)
   rescue JSON::ParserError => e
     errors.add :metadata, e.message
+  end
+
+  def store_metadata_validation
+    self.json_valid = JsonValidator.valid?(metadata)
   end
 end
