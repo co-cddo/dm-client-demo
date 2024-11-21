@@ -24,7 +24,15 @@
 
   <body>
     <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
-    <%= govuk_header(service_name: "Data Marketplace Client Demo") %>
+    <%=
+      govuk_header(service_name: "Data Marketplace Client Demo") do |header|
+        header.with_navigation_item(
+          text: 'Records',
+          href: records_path,
+          active: current_page?(records_path)
+        )
+      end
+    %>
 
     <div class="govuk-width-container ">
       <main class="govuk-main-wrapper " id="main-content" role="main">

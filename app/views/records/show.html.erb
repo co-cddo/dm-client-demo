@@ -1,10 +1,17 @@
-<%= render @record %>
+<% content_for :title, "Record: #{@record.name}" %>
+<div id="<%= dom_id @record %>">
+  <h1 class="govuk-heading-m"><%= @record.name %></h1>
 
-<div>
-  <%= govuk_button_to "Destroy this record", @record, method: :delete, warning: true %>
-</div>
+  <pre>
+  <%= JSON.pretty_generate(@record.metadata) %>
+  </pre>
 
-<div class="govuk-!-padding-bottom-2">
-    <%= govuk_link_to "Edit this record", edit_record_path(@record) %> |
-  <%= govuk_link_to "Back to records", records_path %>
+  <div>
+    <%= govuk_button_to "Destroy this record", @record, method: :delete, warning: true %>
+  </div>
+
+  <div class="govuk-!-padding-bottom-2">
+      <%= govuk_link_to "Edit this record", edit_record_path(@record) %> |
+    <%= govuk_link_to "Back to records", records_path %>
+  </div>
 </div>
