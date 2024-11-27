@@ -1,0 +1,31 @@
+<% content_for :title, "Users" %>
+
+<h1 class="govuk-heading-l">Users</h1>
+<p class="govuk-body">
+  The users listed here can log into this application using Google.
+</p>
+
+<%= govuk_link_to "New user", new_user_path %>
+
+<div id="users">
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Email</th>
+        <th scope="col" class="govuk-table__header">Link</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% @users.each do |user| %>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <%= user.email %>
+          </td>
+          <td class="govuk-table__cell">
+            <%= link_to "Show this user", user %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
