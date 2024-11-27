@@ -1,0 +1,15 @@
+<% content_for :title, "User: #{@user.id}" %>
+<div id="<%= dom_id @user %>">
+  <h1 class="govuk-heading-m">User: <%= @user.email %></h1>
+
+  <p class="govuk-body">
+    Remove this user if you wish to disable their ability to log into this application.
+  </p>
+
+  <p>
+    <%= govuk_button_to "Remove this user", @user, method: :delete %>
+  </p>
+
+
+  <p><%= govuk_link_to "Back to users", users_path %></p>
+</div>

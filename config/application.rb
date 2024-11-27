@@ -46,5 +46,13 @@ module DmClientDemo
       clientId: dm_client_id,
       clientSecret: dm_client_secret,
     }
+
+    google_client_id = ENV.fetch("GOOGLE_CLIENT_ID", Rails.application.credentials&.google&.fetch(:clientId, "id"))
+    google_client_secret = ENV.fetch("GOOGLE_CLIENT_SECRET", Rails.application.credentials&.google&.fetch(:clientSecret, "secret"))
+
+    config.google = {
+      clientId: google_client_id,
+      clientSecret: google_client_secret,
+    }
   end
 end
