@@ -9,6 +9,11 @@ RSpec.describe "/records", type: :request do
       metadata: "",
     }
   end
+  let(:user) { create :user }
+
+  before do
+    sign_in user
+  end
 
   describe "GET /index" do
     it "renders a successful response" do
@@ -103,12 +108,10 @@ RSpec.describe "/records", type: :request do
   end
 
   describe "POST /:id/publish" do
-    let(:user) { create :user }
     let(:success) { true }
     let(:body) { "" }
     let(:dm_response) { OpenStruct.new(success?: success, body:) }
     before do
-      sign_in user
       expect(DataMarketplaceConnector).to receive(:create).with(record).and_return(dm_response)
     end
 

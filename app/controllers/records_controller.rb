@@ -1,6 +1,6 @@
 class RecordsController < ApplicationController
   before_action :set_record, only: %i[show edit update destroy publish]
-  before_action :authenticate_user!, only: [:publish]
+  before_action :authenticate_user!
 
   # GET /records
   def index
