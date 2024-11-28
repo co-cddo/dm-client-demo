@@ -132,22 +132,22 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    google-protobuf (4.28.3)
+    google-protobuf (4.29.0)
       bigdecimal
       rake (>= 13)
-    google-protobuf (4.28.3-aarch64-linux)
+    google-protobuf (4.29.0-aarch64-linux)
       bigdecimal
       rake (>= 13)
-    google-protobuf (4.28.3-arm64-darwin)
+    google-protobuf (4.29.0-arm64-darwin)
       bigdecimal
       rake (>= 13)
-    google-protobuf (4.28.3-x86-linux)
+    google-protobuf (4.29.0-x86-linux)
       bigdecimal
       rake (>= 13)
-    google-protobuf (4.28.3-x86_64-darwin)
+    google-protobuf (4.29.0-x86_64-darwin)
       bigdecimal
       rake (>= 13)
-    google-protobuf (4.28.3-x86_64-linux)
+    google-protobuf (4.29.0-x86_64-linux)
       bigdecimal
       rake (>= 13)
     govuk-components (5.7.1)
@@ -277,7 +277,7 @@ GEM
     puma (6.5.0)
       nio4r (~> 2.0)
     raabro (1.4.0)
-    rabl (0.16.1)
+    rabl (0.17.0)
       activesupport (>= 2.3.14)
     racc (1.8.1)
     rack (3.1.8)
