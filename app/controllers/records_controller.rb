@@ -1,5 +1,5 @@
 class RecordsController < ApplicationController
-  before_action :set_record, only: %i[show edit update destroy publish]
+  before_action :set_record, only: %i[show edit update destroy publish unpublish]
   before_action :authenticate_user!
 
   # GET /records
@@ -51,12 +51,25 @@ class RecordsController < ApplicationController
   def publish
     response = DataMarketplaceConnector.create(@record) # rubocop:disable Rails/SaveBang
     if response.success?
-      # env.response_headers['location'].split('/').last
+      @record.update!(remote_id: response.env.response_headers["location"].split("/").last)
       redirect_to @record, notice: "Record successfully published to Data Marketplace"
     else
       body = JSON.parse(response.body)
       Rails.logger.error "Publishing to Data Market place failed for record #{@record.id}: #{body}"
       redirect_to @record, alert: "Record publishing to Data Marketplace failed: #{body['message']}"
+    end
+  end
+
+  # POST /records/1/unpublish
+  def unpublish
+    response = DataMarketplaceConnector.remove(@record)
+    if response.success?
+      @record.update!(remote_id: nil)
+      redirect_to @record, notice: "Record successfully removed from the Data Marketplace"
+    else
+      body = JSON.parse(response.body)
+      Rails.logger.error "Unpublishing to Data Market place failed for record #{@record.id}: #{body}"
+      redirect_to @record, alert: "Record unpublishing/removal from Data Marketplace failed: #{body['message']}"
     end
   end
 

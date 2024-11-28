@@ -149,9 +149,12 @@ RSpec.describe "/records", type: :request do
   describe "POST /:id/publish" do
     let(:success) { true }
     let(:body) { "" }
-    let(:dm_response) { OpenStruct.new(success?: success, body:) }
+    let(:identifier) { SecureRandom.uuid }
+    let(:env) { double(response_headers: { "location" => "foo/bar/#{identifier}" }) }
+    let(:dm_response) { double(success?: success, body:, env:) }
     before do
       expect(DataMarketplaceConnector).to receive(:create).with(record).and_return(dm_response)
+      allow(DataMarketplaceConnector).to receive(:get).with(record).and_return(double(body: "{}"))
     end
 
     it "pushes the data to Data Marketplace and shows results" do
@@ -163,6 +166,12 @@ RSpec.describe "/records", type: :request do
       post publish_record_url(record)
       follow_redirect!
       expect(response.body).to include("Record successfully published to Data Marketplace")
+    end
+
+    it "records the identifier as the remote id" do
+      post publish_record_url(record)
+      record.reload
+      expect(record.remote_id).to eq(identifier)
     end
 
     context "with failure" do
@@ -179,6 +188,50 @@ RSpec.describe "/records", type: :request do
         post publish_record_url(record)
         follow_redirect!
         expect(response.body).not_to include("Record successfully published to Data Marketplace")
+        expect(response.body).to include(message)
+      end
+    end
+  end
+
+  describe "POST /:id/unpublish" do
+    let(:success) { true }
+    let(:body) { "" }
+    let(:dm_response) { OpenStruct.new(success?: success, body:) }
+    before do
+      expect(DataMarketplaceConnector).to receive(:remove).with(record).and_return(dm_response)
+    end
+
+    it "pushes the data to Data Marketplace and shows results" do
+      post unpublish_record_url(record)
+      expect(response).to redirect_to(record)
+    end
+
+    it "displays message" do
+      post unpublish_record_url(record)
+      follow_redirect!
+      expect(response.body).to include("Record successfully removed from the Data Marketplace")
+    end
+
+    it "clears the remove id" do
+      post unpublish_record_url(record)
+      record.reload
+      expect(record.remote_id).to be_blank
+    end
+
+    context "with failure" do
+      let(:success) { false }
+      let(:message) { Faker::Lorem.sentence }
+      let(:body) { { message: }.to_json }
+
+      it "pushes the data to Data Marketplace and shows results" do
+        post unpublish_record_url(record)
+        expect(response).to redirect_to(record)
+      end
+
+      it "displays message" do
+        post unpublish_record_url(record)
+        follow_redirect!
+        expect(response.body).not_to include("Record successfully removed from the Data Marketplace")
         expect(response.body).to include(message)
       end
     end

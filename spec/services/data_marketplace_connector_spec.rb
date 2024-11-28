@@ -62,4 +62,21 @@ RSpec.describe DataMarketplaceConnector, type: :service do
       expect(described_class.update(record)).to be_success
     end
   end
+
+  describe ".remove" do
+    before do
+      stub_request(:delete, "https://apitest.datamarketplace.gov.uk/v1/datasets/#{record.remote_id}")
+        .with(
+          headers: {
+            "Content-Type" => "application/json",
+            "Authorization" => "Bearer #{token}",
+          },
+        )
+        .to_return(status: 200, body: "", headers: {})
+    end
+
+    it "returns success" do
+      expect(described_class.remove(record)).to be_success
+    end
+  end
 end

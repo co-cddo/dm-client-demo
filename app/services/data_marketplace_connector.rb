@@ -11,6 +11,10 @@ class DataMarketplaceConnector
     new.update(record) # rubocop:disable Rails/SaveBang
   end
 
+  def self.remove(record)
+    new.remove(record)
+  end
+
   def create(record)
     Faraday.post(
       "https://apitest.datamarketplace.gov.uk/v1/datasets",
@@ -34,6 +38,15 @@ class DataMarketplaceConnector
     Faraday.patch(
       File.join("https://apitest.datamarketplace.gov.uk/v1/datasets", record.remote_id),
       metadata.to_json,
+      "Content-Type" => "application/json",
+      "Authorization" => "Bearer #{token}",
+    )
+  end
+
+  def remove(record)
+    Faraday.delete(
+      File.join("https://apitest.datamarketplace.gov.uk/v1/datasets", record.remote_id),
+      {},
       "Content-Type" => "application/json",
       "Authorization" => "Bearer #{token}",
     )
