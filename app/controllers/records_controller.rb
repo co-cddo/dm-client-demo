@@ -9,7 +9,7 @@ class RecordsController < ApplicationController
 
   # GET /records/1
   def show
-    @remote_metadata = JSON.parse(DataMarketplaceConnector.get(@record).body) if @record.remote_id?
+    @remote_metadata = JSON.parse(DataMarketplaceConnector.get(@record).body) if @record.published?
   end
 
   # GET /records/new
@@ -34,6 +34,7 @@ class RecordsController < ApplicationController
   # PATCH/PUT /records/1
   def update
     if @record.update(record_params)
+      DataMarketplaceConnector.update(@record) if @record.published? # rubocop:disable Rails/SaveBang
       redirect_to @record, notice: "Record was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity

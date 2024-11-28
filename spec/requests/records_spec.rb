@@ -34,15 +34,9 @@ RSpec.describe "/records", type: :request do
       let(:remote_content) do
         { something: }.to_json
       end
-      let(:token) { SecureRandom.uuid }
+      let(:token) { get_dm_token }
 
       before do
-        stub_request(:post, "https://apitest.datamarketplace.gov.uk/v1/clientauth/get-token")
-          .with(
-            body: Rails.configuration.dm_api.to_json,
-            headers: { "Content-Type" => "application/json" },
-          )
-          .to_return(status: 200, body: { token: }.to_json)
         stub_request(:get, "https://apitest.datamarketplace.gov.uk/v1/datasets/#{record.remote_id}")
           .with(
             headers: {
@@ -120,6 +114,20 @@ RSpec.describe "/records", type: :request do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         patch record_url(record), params: { record: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+
+    context "with a published record" do
+      let(:record) { create :record, :published }
+      let(:token) { get_dm_token }
+      let(:success) { double(success?: true) }
+
+      before do
+        expect(DataMarketplaceConnector).to receive(:update).with(record).and_return(success)
+      end
+
+      it "pushes the changes to the data marketplace" do
+        patch record_url(record), params: { record: valid_attributes }
       end
     end
   end
