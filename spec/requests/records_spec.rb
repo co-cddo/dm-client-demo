@@ -27,6 +27,37 @@ RSpec.describe "/records", type: :request do
       get record_url(record)
       expect(response).to be_successful
     end
+
+    context "with published record" do
+      let(:record) { create :record, :published }
+      let(:something) { Faker::Lorem.sentence }
+      let(:remote_content) do
+        { something: }.to_json
+      end
+      let(:token) { SecureRandom.uuid }
+
+      before do
+        stub_request(:post, "https://apitest.datamarketplace.gov.uk/v1/clientauth/get-token")
+          .with(
+            body: Rails.configuration.dm_api.to_json,
+            headers: { "Content-Type" => "application/json" },
+          )
+          .to_return(status: 200, body: { token: }.to_json)
+        stub_request(:get, "https://apitest.datamarketplace.gov.uk/v1/datasets/#{record.remote_id}")
+          .with(
+            headers: {
+              "Content-Type" => "application/json",
+              "Authorization" => "Bearer #{token}",
+            },
+          )
+          .to_return(status: 200, body: remote_content, headers: {})
+      end
+
+      it "displays remote content" do
+        get record_url(record)
+        expect(response.body).to include(something)
+      end
+    end
   end
 
   describe "GET /new" do

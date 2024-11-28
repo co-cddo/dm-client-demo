@@ -8,7 +8,9 @@ class RecordsController < ApplicationController
   end
 
   # GET /records/1
-  def show; end
+  def show
+    @remote_metadata = JSON.parse(DataMarketplaceConnector.get(@record).body) if @record.remote_id?
+  end
 
   # GET /records/new
   def new
@@ -48,6 +50,7 @@ class RecordsController < ApplicationController
   def publish
     response = DataMarketplaceConnector.create(@record) # rubocop:disable Rails/SaveBang
     if response.success?
+      # env.response_headers['location'].split('/').last
       redirect_to @record, notice: "Record successfully published to Data Marketplace"
     else
       body = JSON.parse(response.body)

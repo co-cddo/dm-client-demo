@@ -3,10 +3,23 @@ class DataMarketplaceConnector
     new.create(record) # rubocop:disable Rails/SaveBang
   end
 
+  def self.get(record)
+    new.get(record)
+  end
+
   def create(record)
     Faraday.post(
       "https://apitest.datamarketplace.gov.uk/v1/datasets",
       record.metadata.to_json,
+      "Content-Type" => "application/json",
+      "Authorization" => "Bearer #{token}",
+    )
+  end
+
+  def get(record)
+    Faraday.get(
+      File.join("https://apitest.datamarketplace.gov.uk/v1/datasets", record.remote_id),
+      {},
       "Content-Type" => "application/json",
       "Authorization" => "Bearer #{token}",
     )

@@ -1,6 +1,6 @@
 <% content_for :title, "Record: #{@record.name}" %>
 <div id="<%= dom_id @record %>">
-  <h1 class="govuk-heading-m"><%= @record.name %></h1>
+  <h1 class="govuk-heading-l"><%= @record.name %></h1>
 
   <pre>
   <%= JSON.pretty_generate(@record.metadata) %>
@@ -16,4 +16,24 @@
     <%= govuk_link_to "Edit this record", edit_record_path(@record) %> |
     <%= govuk_link_to "Back to records", records_path %>
   </div>
+
+  <% if @record.remote_id? && @remote_metadata %>
+    <h2 class=govuk-heading-m>Record within Data Marketplace</h2>
+
+    <p class="govuk-body">
+      This record be accessed
+      <%= link_to(
+            "here",
+            "https://test.datamarketplace.gov.uk/catalogdata/getcddodataasset?dataAssetId=#{@record.remote_id}"
+          ) %>
+      on the Data Marketplace
+    </p>
+
+    <h3 class=govuk-heading-s>Remote Metadata</h3>
+
+    <pre>
+    <%= JSON.pretty_generate(@remote_metadata) %>
+    </pre>
+
+  <% end %>
 </div>

@@ -4,5 +4,9 @@ FactoryBot.define do
     metadata do
       { title: name }.to_json
     end
+
+    trait :published do
+      remote_id { SecureRandom.uuid }
+    end
   end
 end
