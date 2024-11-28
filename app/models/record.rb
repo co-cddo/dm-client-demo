@@ -3,6 +3,10 @@ class Record < ApplicationRecord
 
   validates :name, :metadata, presence: true
 
+  def published?
+    remote_id?
+  end
+
   def json_parse_metadata
     return if metadata.blank?
     return if metadata.is_a?(Hash)
