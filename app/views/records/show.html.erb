@@ -7,14 +7,16 @@
   </pre>
 
 
-  <div class="govuk-!-padding-bottom-2">
+  <div class="govuk-!-padding-bottom-4">
     <%= govuk_link_to "Edit this record", edit_record_path(@record) %>
+  </div>
+
+  <div class="govuk-!-padding-bottom-2">
     <% if @record.published? %>
       <p class="govuk-body">Any edits to the record will be pushed to the Data Marketplace</p>
-
       <%= govuk_button_to "Remove this record from the Data Marketplace", unpublish_record_path(@record), warning: true %>
     <% else %>
-      <%= govuk_button_to "Publish this record on the Data Marketplace", publish_record_path(@record), warning: true %>
+      <%= govuk_button_to "Publish this record on the Data Marketplace", publish_record_path(@record) %>
     <% end %>
   </div>
 
@@ -24,7 +26,7 @@
     <h2 class=govuk-heading-m>Record within Data Marketplace</h2>
 
     <p class="govuk-body">
-      This record be accessed
+      This record can be viewed
       <%= link_to(
             "here",
             "https://test.datamarketplace.gov.uk/catalogdata/getcddodataasset?dataAssetId=#{@record.remote_id}"
@@ -39,6 +41,4 @@
     </pre>
 
   <% end %>
-
-  <%= govuk_link_to "Back to records", records_path %>
 </div>
