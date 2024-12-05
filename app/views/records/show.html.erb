@@ -2,8 +2,11 @@
 <div id="<%= dom_id @record %>">
   <h1 class="govuk-heading-l"><%= @record.name %></h1>
 
+  <p><%= valid_record_tag(@record) %></p>
+
+  <h2 class="govuk-heading-m govuk-!-padding-top-2">Metadata</h1>
   <pre>
-  <%= JSON.pretty_generate(@record.metadata) %>
+<%= JSON.pretty_generate(@record.metadata) %>
   </pre>
 
 
@@ -16,7 +19,9 @@
       <p class="govuk-body">Any edits to the record will be pushed to the Data Marketplace</p>
       <%= govuk_button_to "Remove this record from the Data Marketplace", unpublish_record_path(@record), warning: true %>
     <% else %>
-      <%= govuk_button_to "Publish this record on the Data Marketplace", publish_record_path(@record) %>
+      <%= govuk_button_to "Publish this record on the Data Marketplace", publish_record_path(@record), class: "govuk-!-padding-bottom-2" %>
+
+      <%= govuk_button_to "Destroy this record", @record, method: :delete, warning: true %>
     <% end %>
   </div>
 
