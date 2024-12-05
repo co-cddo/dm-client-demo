@@ -16,6 +16,10 @@
     <%= form.email_field :email %>
   </div>
 
+  <div>
+    <%= form.label :admin, "Is admin?" %>
+    <%= form.checkbox :admin %>
+
   <div class="govuk-!-margin-top-2">
     <%= form.submit class: "govuk-button" %>
   </div>

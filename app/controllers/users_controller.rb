@@ -39,6 +39,8 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1
   def update
+    return redirect_to(user, alert: "Only admins can edit users") unless current_user.admin?
+
     if user.update(user_params)
       redirect_to user, notice: "User was successfully updated.", status: :see_other
     else
@@ -48,8 +50,11 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy
+    return redirect_to(user, alert: "Only admins can remove users") unless current_user.admin?
+    return redirect_to(user, alert: "You cannot remove yourself") if current_user == user
+
     user.destroy!
-    redirect_to users_path, notice: "User was successfully destroyed.", status: :see_other
+    redirect_to users_path, notice: "User was successfully removed.", status: :see_other
   end
 
 private
@@ -61,7 +66,7 @@ private
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.expect(user: [:email])
+    params.expect(user: %i[email admin])
   end
 
   def auto_generate_password

@@ -2,14 +2,29 @@
 <div id="<%= dom_id @user %>">
   <h1 class="govuk-heading-m">User: <%= @user.email %></h1>
 
-  <p class="govuk-body">
-    Remove this user if you wish to disable their ability to log into this application.
-  </p>
+  <%= content_tag(:p, "This user is an admin", class: "govuk-body") if @user.admin? %>
 
-  <p>
-    <%= govuk_button_to "Remove this user", @user, method: :delete %>
-  </p>
+  <% if current_user.admin? %>
+    <p class="govuk-body">
+      Remove this user if you wish to disable their ability to log into this application.
+    </p>
 
+    <p>
+      <%= govuk_link_to "Edit this user", edit_user_path(@user) %>
+    </p>
+
+    <% if current_user == @user %>
+      <p class="govuk-body">You cannot remove yourself.</p>
+    <% else %>
+    <p>
+      <%= govuk_button_to "Remove this user", @user, method: :delete %>
+    </p>
+    <% end %>
+  <% else %>
+    <p class="govuk-body">
+      Ask an admin to remove this user if you wish to disable their ability to log into this application.
+    </p>
+  <% end %>
 
   <p><%= govuk_link_to "Back to users", users_path %></p>
 </div>
