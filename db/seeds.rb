@@ -4,4 +4,5 @@
 #
 User.find_or_create_by!(email: "robert.nichols@digital.cabinet-office.gov.uk") do |user|
   user.password = Devise.friendly_token
+  user.admin = true
 end

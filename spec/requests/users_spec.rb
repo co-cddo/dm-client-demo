@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "/users", type: :request do
   let(:user) { create :user }
+  let(:admin)  { create :user, :is_admin }
   let(:logged_in_user) { create :user }
 
   let(:valid_attributes) { attributes_for :user }
@@ -69,7 +70,8 @@ RSpec.describe "/users", type: :request do
   end
 
   describe "PATCH /update" do
-    context "with valid parameters" do
+    context "as admin with valid parameters" do
+      let(:logged_in_user) { admin }
       it "updates the requested user" do
         patch user_url(user), params: { user: valid_attributes }
         user.reload
@@ -83,7 +85,22 @@ RSpec.describe "/users", type: :request do
       end
     end
 
+    context "with valid parameters" do
+      it "updates the requested user" do
+        patch user_url(user), params: { user: valid_attributes }
+        user.reload
+        expect(user.email).not_to eq(valid_attributes[:email])
+      end
+
+      it "redirects to the user" do
+        patch user_url(user), params: { user: valid_attributes }
+        user.reload
+        expect(response).to redirect_to(user_url(user))
+      end
+    end
+
     context "with invalid parameters" do
+      let(:logged_in_user) { admin }
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         patch user_url(user), params: { user: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
@@ -92,16 +109,48 @@ RSpec.describe "/users", type: :request do
   end
 
   describe "DELETE /destroy" do
-    it "destroys the requested user" do
+    it "does not destroy the requested user" do
       user # Ensure user created before count
       expect {
         delete user_url(user)
-      }.to change(User, :count).by(-1)
+      }.not_to change(User, :count)
     end
 
-    it "redirects to the users list" do
+    it "redirects to the user" do
       delete user_url(user)
-      expect(response).to redirect_to(users_url)
+      expect(response).to redirect_to(user)
+    end
+
+    context "when logged in as admin" do
+      let(:logged_in_user) { admin }
+
+      it "destroys the requested user" do
+        user # Ensure user created before count
+        expect {
+          delete user_url(user)
+        }.to change(User, :count).by(-1)
+      end
+
+      it "redirects to the users list" do
+        delete user_url(user)
+        expect(response).to redirect_to(users_url)
+      end
+    end
+
+    context "when user is current user" do
+      let(:user) { admin }
+      let(:logged_in_user) { admin }
+      it "does not destroy the requested user" do
+        user # Ensure user created before count
+        expect {
+          delete user_url(user)
+        }.not_to change(User, :count)
+      end
+
+      it "redirects to the user" do
+        delete user_url(user)
+        expect(response).to redirect_to(user)
+      end
     end
   end
 end
