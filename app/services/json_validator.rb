@@ -11,7 +11,11 @@ class JsonValidator
     @json = json
   end
 
+  def report
+    @report ||= JSON::Validator.fully_validate(JSON_SCHEMA_PATH, json)
+  end
+
   def valid?
-    JSON::Validator.validate JSON_SCHEMA_PATH, json
+    report.empty?
   end
 end

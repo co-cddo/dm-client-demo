@@ -17,6 +17,11 @@ class Record < ApplicationRecord
   end
 
   def store_metadata_validation
-    self.json_valid = JsonValidator.valid?(metadata)
+    self.json_valid = validator.valid?
+    self.validation_report = validator.report
+  end
+
+  def validator
+    @validator ||= JsonValidator.new(metadata)
   end
 end

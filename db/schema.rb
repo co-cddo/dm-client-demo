@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_05_113814) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_09_110557) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -21,6 +21,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_05_113814) do
     t.datetime "updated_at", null: false
     t.boolean "json_valid"
     t.string "remote_id"
+    t.text "validation_report", array: true
   end
 
   create_table "users", force: :cascade do |t|
