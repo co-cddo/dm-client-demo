@@ -2,7 +2,7 @@
 
 <h1 class="govuk-heading-l">Records</h1>
 
-<%= govuk_link_to "New record", new_record_path %>
+<%= govuk_link_to("New record", new_record_path) if user_signed_in? %>
 
 <div id="records">
   <table class="govuk-table">
