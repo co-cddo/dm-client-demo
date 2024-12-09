@@ -3,6 +3,7 @@
   <h1 class="govuk-heading-l"><%= @record.name %></h1>
 
   <p><%= valid_record_tag(@record) %></p>
+  <%= govuk_list(@record.validation_report) unless @record.json_valid? %>
 
   <h2 class="govuk-heading-m govuk-!-padding-top-2">Metadata</h1>
   <pre>
