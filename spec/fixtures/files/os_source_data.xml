@@ -1,0 +1,115 @@
+<dcat:CatalogRecord rdf:about="https://osmetadata.astuntechnology.com/geonetwork/api/collections/main/items/8134c299-1907-4578-a6a8-ae325657e6ad" xmlns:adms="http://www.w3.org/ns/adms#" xmlns:dcatap="http://data.europa.eu/r5r/" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:vcard="http://www.w3.org/2006/vcard/ns#" xmlns:dct="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:ns14="http://spdx.org/rdf/terms#" xmlns:locn="http://www.w3.org/ns/locn#" xmlns:dcat="http://www.w3.org/ns/dcat#" xmlns:prov="http://www.w3.org/ns/prov#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dct:identifier>8134c299-1907-4578-a6a8-ae325657e6ad</dct:identifier>
+    <dct:created>2016-03-15T11:34:09Z</dct:created>
+    <dct:modified>2025-01-22T10:46:51.995Z</dct:modified>
+    <dct:language>
+        <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/ENG">
+            <skos:prefLabel>eng</skos:prefLabel>
+            <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem"/>
+        </skos:Concept>
+    </dct:language>
+    <foaf:primaryTopic>
+        <dcat:Dataset rdf:about="https://osmetadata.astuntechnology.com/geonetwork/api/collections/main/items/8134c299-1907-4578-a6a8-ae325657e6ad#resource">
+            <dct:title>OS Terrain 50 DTM</dct:title>
+            <dct:description>Ordnance Survey���s OS Terrain 50 DTM is a dataset representing the physical shape of the real world. The dataset includes 50metre GRID. The DTM data is captured from Ordnance Survey���s large scale aerial imagery. The product is updated and maintained annually.
+
+A free to use topology GIS dataset, to help you visualise simple landscapes in 3D and bring your geographic analysis to life.</dct:description>
+            <dct:identifier>OS Terrain 50 DTM</dct:identifier>
+            <dct:modified>2025-01-22T10:46:51.995Z</dct:modified>
+            <dct:language>
+                <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/ENG">
+                    <skos:prefLabel>eng</skos:prefLabel>
+                    <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem"/>
+                </skos:Concept>
+            </dct:language>
+            <dcat:contactPoint>
+                <vcard:Kind>
+                    <vcard:title>Ordnance Survey</vcard:title>
+                    <vcard:role>publisher</vcard:role>
+                    <vcard:hasEmail>customerservices@os.uk</vcard:hasEmail>
+                </vcard:Kind>
+            </dcat:contactPoint>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Height</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Contours</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Spot Heights</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Breaklines</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Tidelines</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Elevation</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dct:type>
+                <skos:Concept>
+                    <skos:prefLabel>Dataset</skos:prefLabel>
+                </skos:Concept>
+            </dct:type>
+            <dcat:landingPage>
+                <foaf:Document rdf:about="https://osmetadata.astuntechnology.com/geonetwork/api/collections/main/items/8134c299-1907-4578-a6a8-ae325657e6ad">
+                    <dct:title>OS Terrain 50 DTM</dct:title>
+                </foaf:Document>
+            </dcat:landingPage>
+            <dct:spatial>
+                <dct:Location>
+                    <locn:geometry>{"coordinates":[[[-8.45,49.86],[1.78,49.86],[1.78,60.86],[-8.45,60.86],[-8.45,49.86]]],"type":"Polygon"}</locn:geometry>
+                </dct:Location>
+            </dct:spatial>
+            <prov:wasUsedBy>
+                <prov:Activity>
+                    <prov:used rdf:resource="local:OS Terrain 50 DTM"/>
+                    <prov:qualifiedAssociation>
+                        <prov:hadPlan>
+                            <prov:wasDerivedFrom rdf:parseType="Resource">
+                                <dct:title>Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services</dct:title>
+                            </prov:wasDerivedFrom>
+                        </prov:hadPlan>
+                    </prov:qualifiedAssociation>
+                    <prov:generated>
+                        <rdf:type rdf:about="http://inspire.ec.europa.eu/metadata-codelist/DegreeOfConformity/notConformant"/>
+                    </prov:generated>
+                </prov:Activity>
+            </prov:wasUsedBy>
+            <dcat:distribution>
+                <dcat:Distribution>
+                    <dcat:accessURL rdf:resource="https://os.uk/products/os-terrain-50"/>
+                    <adms:representationTechnique>
+                        <skos:Concept>
+                            <skos:prefLabel></skos:prefLabel>
+                        </skos:Concept>
+                    </adms:representationTechnique>
+                </dcat:Distribution>
+            </dcat:distribution>
+            <dct:accrualPeriodicity>
+                <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/frequency/ANNUAL">
+                    <skos:prefLabel>ANNUAL</skos:prefLabel>
+                    <rdf:type rdf:resource="http://purl.org/dc/terms/Frequency"/>
+                </skos:Concept>
+            </dct:accrualPeriodicity>
+            <dct:provenance>
+                <dct:ProvenanceStatement>
+                    <rdfs:label>OS Terrain 50 DTM was created from high resolution aerial imagery data.</rdfs:label>
+                </dct:ProvenanceStatement>
+            </dct:provenance>
+        </dcat:Dataset>
+    </foaf:primaryTopic>
+</dcat:CatalogRecord>
