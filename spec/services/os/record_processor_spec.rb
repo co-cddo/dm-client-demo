@@ -9,19 +9,15 @@ RSpec.describe OS::RecordProcessor, type: :service do
           </dcat:CatalogRecord>
         XML
       end
-    let(:namespaces) do
-      [
-        'xmlns:dcat="http://www.w3.org/ns/dcat#"',
-        'xmlns:dct="http://purl.org/dc/terms/"',
-        'xmlns:vcard="http://www.w3.org/2006/vcard/ns#"',
-        'xmlns:skos="http://www.w3.org/2004/02/skos/core#"',
-        'xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"'
-      ].join(' ')
-    end
+    let(:namespaces) { os_xml_namespaces }
     subject(:record_processor) { described_class.new(source_data:) }
 
     it "populates metadata" do
       expect(record_processor.metadata).to be_present
+    end
+
+    it "adds supplemetary info" do
+      expect(record_processor.metadata['accessRights']).to eq(described_class::SUPPLEMENTARY['accessRights'])
     end
 
     context "with an identifier" do

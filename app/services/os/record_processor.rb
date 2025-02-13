@@ -1,14 +1,24 @@
 class OS::RecordProcessor
   MAPPING_FILE = File.expand_path('os_to_dm_mapping.yml', __dir__)
+  SUPPLEMENTARY = {
+    status: 'Draft',
+    securityClassification: "OFFICIAL",
+    accessRights: "OPEN",
+  }.stringify_keys
+
 
   attr_reader :source_data
+
+  def self.metadata_from(source_data:)
+    new(source_data:).metadata
+  end
 
   def initialize(source_data:)
     @source_data = source_data
   end
 
   def metadata
-    matadata ||= extract_metadata_from_source_data(mapping)
+    matadata ||= extract_metadata_from_source_data(mapping).merge(SUPPLEMENTARY)
   end
 
   private
