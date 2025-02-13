@@ -8,7 +8,7 @@ RSpec.describe OS::SourceRetriever, type: :service do
       <dcat:CatalogRecord #{namespaces} about="#{item_url}"></dcat:CatalogRecord>
     XML
   end
-  let(:item_body) { File.read(fixture_file_upload('os_source_data.xml')) }
+  let(:item_body) { File.read(fixture_file_upload("os_source_data.xml")) }
   let(:get_first_page_of_list) do
     stub_request(:get, described_class::LIST_URL)
       .with(query: { limit: 100, startindex: 0, f: :dcat })
@@ -17,7 +17,7 @@ RSpec.describe OS::SourceRetriever, type: :service do
   let(:get_second_page_of_list) do
     stub_request(:get, described_class::LIST_URL)
       .with(query: { limit: 100, startindex: 100, f: :dcat })
-      .to_return(body: '')
+      .to_return(body: "")
   end
   let(:get_individual_resource) do
     stub_request(:get, item_url)

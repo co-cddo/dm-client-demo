@@ -1,5 +1,5 @@
 class OS::SourceRetriever
-  LIST_URL = 'https://osmetadata.astuntechnology.com/geonetwork/api/collections/main/items'
+  LIST_URL = "https://osmetadata.astuntechnology.com/geonetwork/api/collections/main/items".freeze
 
   def self.call
     new.objects
@@ -9,7 +9,7 @@ class OS::SourceRetriever
     @objects ||= get_array_of_objects
   end
 
-  private
+private
 
   def get_array_of_objects
     urls = list_of_object_urls
@@ -25,7 +25,7 @@ class OS::SourceRetriever
     limit = 100
     startindex = 0
     urls = []
-    while hundred = get_urls(limit, startindex).presence
+    while (hundred = get_urls(limit, startindex).presence)
       urls << hundred
       startindex += limit
     end
@@ -38,7 +38,7 @@ class OS::SourceRetriever
     url.query = {
       limit:,
       startindex:,
-      f: :dcat
+      f: :dcat,
     }.to_query
     response = Faraday.get(url)
     doc = Nokogiri::XML(response.body)

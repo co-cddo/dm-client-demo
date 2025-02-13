@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe OS::Populator, type: :service do
-  let(:xml) { File.read(fixture_file_upload('os_source_data.xml')) }
+  let(:xml) { File.read(fixture_file_upload("os_source_data.xml")) }
   let(:metadata) { OS::RecordProcessor.metadata_from(source_data: xml) }
 
   describe "#populate" do
@@ -20,12 +20,12 @@ RSpec.describe OS::Populator, type: :service do
     end
 
     it "stores the metadata created from the xml (with type modified)" do
-      metadata['type'] = 'Data Set'
+      metadata["type"] = "Data Set"
       expect(populate.metadata).to eq(metadata)
     end
 
     it "uses the supplier identifier as the unique name" do
-      expect(populate.name).to eq(metadata['supplierIdentifier'])
+      expect(populate.name).to eq(metadata["supplierIdentifier"])
     end
   end
 end

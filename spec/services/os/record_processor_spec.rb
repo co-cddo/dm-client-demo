@@ -1,14 +1,13 @@
 require "rails_helper"
 
 RSpec.describe OS::RecordProcessor, type: :service do
-
-  describe 'getting data from source' do
+  describe "getting data from source" do
     let(:source_data) do
-        <<~XML
-          <dcat:CatalogRecord #{namespaces}>
-          </dcat:CatalogRecord>
-        XML
-      end
+      <<~XML
+        <dcat:CatalogRecord #{namespaces}>
+        </dcat:CatalogRecord>
+      XML
+    end
     let(:namespaces) { os_xml_namespaces }
     subject(:record_processor) { described_class.new(source_data:) }
 
@@ -17,7 +16,7 @@ RSpec.describe OS::RecordProcessor, type: :service do
     end
 
     it "adds supplemetary info" do
-      expect(record_processor.metadata['accessRights']).to eq(described_class::SUPPLEMENTARY['accessRights'])
+      expect(record_processor.metadata["accessRights"]).to eq(described_class::SUPPLEMENTARY["accessRights"])
     end
 
     context "with an identifier" do
@@ -30,7 +29,7 @@ RSpec.describe OS::RecordProcessor, type: :service do
         XML
       end
       it "stores the identified in supplier identifier" do
-        expect(record_processor.metadata['supplierIdentifier']).to eq(identifier)
+        expect(record_processor.metadata["supplierIdentifier"]).to eq(identifier)
       end
     end
 
@@ -44,7 +43,7 @@ RSpec.describe OS::RecordProcessor, type: :service do
         XML
       end
       it "stores an empty supplier identifier" do
-        expect(record_processor.metadata['supplierIdentifier']).to be_empty
+        expect(record_processor.metadata["supplierIdentifier"]).to be_empty
       end
     end
 
@@ -60,7 +59,7 @@ RSpec.describe OS::RecordProcessor, type: :service do
         XML
       end
       it "maintains the nesting" do
-        expect(record_processor.metadata.dig 'contactPoint', 0, 'email').to eq(email)
+        expect(record_processor.metadata.dig("contactPoint", 0, "email")).to eq(email)
       end
     end
 
@@ -74,7 +73,7 @@ RSpec.describe OS::RecordProcessor, type: :service do
         XML
       end
       it "is able to retrive the data and store it in the correct place" do
-        expect(record_processor.metadata.dig 'distribution', 0, 'downloadURL').to eq(url)
+        expect(record_processor.metadata.dig("distribution", 0, "downloadURL")).to eq(url)
       end
     end
   end
