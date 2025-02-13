@@ -1,0 +1,13 @@
+supplierIdentifier: "//dcat:CatalogRecord/dct:identifier"
+modified: "//dcat:CatalogRecord/dct:modified"
+title: "//dcat:Dataset/dct:title"
+type: "//dcat:Dataset/dct:type//skos:prefLabel"
+description: "//dcat:Dataset/dct:description"
+theme: ""
+publisher: "//dcat:Dataset/dcat:contactPoint//vcard:title"
+keyword: "//dcat:Dataset/dcat:theme//skos:prefLabel"
+contactPoint:
+  - name: "//dcat:Dataset/dcat:contactPoint//vcard:title"
+    email: "//dcat:Dataset/dcat:contactPoint//vcard:hasEmail"
+distribution:
+  - downloadURL: "//dcat:Distribution/dcat:accessURL[@rdf:resource]"

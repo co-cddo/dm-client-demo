@@ -28,6 +28,13 @@
     </div>
   <% end %>
 
+  <% if @record.source_data? %>
+    <h2 class="govuk-heading-m govuk-!-padding-top-2">Source data</h1>
+
+    <pre>
+<%= Nokogiri::XML(@record.source_data).to_xhtml %>
+    </pre>
+  <% end %>
 
   <% if @remote_metadata %>
     <h2 class=govuk-heading-m>Record within Data Marketplace</h2>
