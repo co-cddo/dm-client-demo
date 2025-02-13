@@ -1,0 +1,11 @@
+<% content_for :title, "Sources" %>
+
+<h1 class="govuk-heading-l">Sources</h1>
+
+<ul class="govuk-list">
+  <% @sources.each do |source| %>
+    <li>
+      <%= govuk_link_to source.humanize, source_path(source) %>
+    </li>
+  <% end %>
+</ul>
