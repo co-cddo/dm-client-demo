@@ -43,7 +43,7 @@
       This record can be viewed
       <%= link_to(
             "here",
-            "https://test.datamarketplace.gov.uk/catalogdata/getcddodataasset?dataAssetId=#{@record.remote_id}"
+            File.join("https://", Rails.configuration.dm_root_url, "/catalogdata/getcddodataasset?dataAssetId=#{@record.remote_id}")
           ) %>
       on the Data Marketplace
     </p>

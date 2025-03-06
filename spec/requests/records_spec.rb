@@ -37,7 +37,7 @@ RSpec.describe "/records", type: :request do
       let(:token) { get_dm_token }
 
       before do
-        stub_request(:get, "https://apitest.datamarketplace.gov.uk/v1/datasets/#{record.remote_id}")
+        stub_request(:get, DataMarketplaceConnector.dataset_url(record))
           .with(
             headers: {
               "Content-Type" => "application/json",

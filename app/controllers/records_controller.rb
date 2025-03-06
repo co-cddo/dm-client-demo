@@ -10,6 +10,8 @@ class RecordsController < ApplicationController
   # GET /records/1
   def show
     @remote_metadata = JSON.parse(DataMarketplaceConnector.get(@record).body) if @record.published?
+  rescue JSON::ParserError
+    @remote_metadata = DataMarketplaceConnector.get(@record).body
   end
 
   # GET /records/new

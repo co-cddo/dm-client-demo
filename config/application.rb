@@ -47,6 +47,9 @@ module DmClientDemo
       clientSecret: dm_client_secret,
     }
 
+    config.dm_api_root_url = ENV.fetch("DM_API_ROOT_URL", Rails.application.credentials&.dm_api&.fetch(:rootApiUrl, "apitest.datamarketplace.gov.uk"))
+    config.dm_root_url = ENV.fetch("DM_ROOT_URL", Rails.application.credentials&.dm_api&.fetch(:rootUrl, "test.datamarketplace.gov.uk"))
+
     google_client_id = ENV.fetch("GOOGLE_CLIENT_ID", Rails.application.credentials&.google&.fetch(:clientId, "id"))
     google_client_secret = ENV.fetch("GOOGLE_CLIENT_SECRET", Rails.application.credentials&.google&.fetch(:clientSecret, "secret"))
 

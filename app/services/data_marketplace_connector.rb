@@ -1,51 +1,61 @@
 class DataMarketplaceConnector
   def self.create(record)
-    new.create(record) # rubocop:disable Rails/SaveBang
+    new(record).create # rubocop:disable Rails/SaveBang
   end
 
   def self.get(record)
-    new.get(record)
+    new(record).get
   end
 
   def self.update(record)
-    new.update(record) # rubocop:disable Rails/SaveBang
+    new(record).update # rubocop:disable Rails/SaveBang
   end
 
   def self.remove(record)
-    new.remove(record)
+    new(record).remove
   end
 
-  def create(record)
+  def self.dataset_url(record)
+    new(record).dataset_url
+  end
+
+  attr_reader :record
+
+  def initialize(record)
+    @record = record
+  end
+
+  def create
     Faraday.post(
-      "https://apitest.datamarketplace.gov.uk/v1/datasets",
+      datasets_root_url,
       record.metadata.to_json,
       "Content-Type" => "application/json",
       "Authorization" => "Bearer #{token}",
     )
   end
 
-  def get(record)
+  def get
     Faraday.get(
-      File.join("https://apitest.datamarketplace.gov.uk/v1/datasets", record.remote_id),
+      dataset_url,
       {},
       "Content-Type" => "application/json",
       "Authorization" => "Bearer #{token}",
     )
   end
 
-  def update(record)
+  def update
     metadata = record.metadata.except("identifier")
     Faraday.patch(
-      File.join("https://apitest.datamarketplace.gov.uk/v1/datasets", record.remote_id),
+      dataset_url,
       metadata.to_json,
       "Content-Type" => "application/json",
       "Authorization" => "Bearer #{token}",
     )
   end
 
-  def remove(record)
+  def remove
     Faraday.delete(
-      File.join("https://apitest.datamarketplace.gov.uk/v1/datasets", record.remote_id),
+      dataset_url,
       {},
       "Content-Type" => "application/json",
       "Authorization" => "Bearer #{token}",
@@ -55,12 +65,24 @@ class DataMarketplaceConnector
   def token
     @token ||= begin
       response = Faraday.post(
-        "https://apitest.datamarketplace.gov.uk/v1/clientauth/get-token",
+        "https://#{root_url}/v1/clientauth/get-token",
         Rails.configuration.dm_api.to_json,
         "Content-Type" => "application/json",
       )
       json = JSON.parse(response.body)
       json["token"]
     end
+  end
+
+  def root_url
+    @root_url ||= Rails.configuration.dm_api_root_url
+  end
+
+  def dataset_url
+    @dataset_url ||= File.join(datasets_root_url, record.remote_id)
+  end
+
+  def datasets_root_url
+    @datasets_root_url ||= File.join("https://", root_url, "v1/datasets")
   end
 end
