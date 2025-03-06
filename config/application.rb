@@ -39,19 +39,23 @@ module DmClientDemo
     # Don't generate system test files.
     config.generators.system_tests = nil
 
-    dm_client_id = ENV.fetch("DM_CLIENT_ID", Rails.application.credentials&.dm_api&.fetch(:clientId, "id"))
-    dm_client_secret = ENV.fetch("DM_CLIENT_SECRET", Rails.application.credentials&.dm_api&.fetch(:clientSecret, "secret"))
+    def env_credentials_or_default(env_name, credential, default)
+      ENV[env_name].presence || credential.presence || default
+    end
+
+    dm_client_id = env_credentials_or_default("DM_CLIENT_ID", Rails.application.credentials&.dm_api&.fetch(:clientId), "id")
+    dm_client_secret = env_credentials_or_default("DM_CLIENT_SECRET", Rails.application.credentials&.dm_api&.fetch(:clientSecret), "secret")
 
     config.dm_api = {
       clientId: dm_client_id,
       clientSecret: dm_client_secret,
     }
 
-    config.dm_api_root_url = ENV.fetch("DM_API_ROOT_URL", Rails.application.credentials&.dm_api&.fetch(:rootApiUrl, "apitest.datamarketplace.gov.uk"))
-    config.dm_root_url = ENV.fetch("DM_ROOT_URL", Rails.application.credentials&.dm_api&.fetch(:rootUrl, "test.datamarketplace.gov.uk"))
+    config.dm_api_root_url = env_credentials_or_default("DM_API_ROOT_URL", Rails.application.credentials&.dm_api&.fetch(:rootApiUrl), "apitest.datamarketplace.gov.uk")
+    config.dm_root_url = env_credentials_or_default("DM_ROOT_URL", Rails.application.credentials&.dm_api&.fetch(:rootUrl), "test.datamarketplace.gov.uk")
 
-    google_client_id = ENV.fetch("GOOGLE_CLIENT_ID", Rails.application.credentials&.google&.fetch(:clientId, "id"))
-    google_client_secret = ENV.fetch("GOOGLE_CLIENT_SECRET", Rails.application.credentials&.google&.fetch(:clientSecret, "secret"))
+    google_client_id = env_credentials_or_default("GOOGLE_CLIENT_ID", Rails.application.credentials&.google&.fetch(:clientId), "id")
+    google_client_secret = env_credentials_or_default("GOOGLE_CLIENT_SECRET", Rails.application.credentials&.google&.fetch(:clientSecret), "secret")
 
     config.google = {
       clientId: google_client_id,
