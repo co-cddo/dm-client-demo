@@ -1,10 +1,11 @@
 class OS::RecordProcessor
   MAPPING_FILE = File.expand_path("os_to_dm_mapping.yml", __dir__)
   SUPPLEMENTARY = {
-    status: "Draft",
+    status: "Published",
     securityClassification: "OFFICIAL",
     accessRights: "OPEN",
   }.stringify_keys
+  CONTACT_POINT_SUPPLEMENT = { role: "contact" }.stringify_keys
 
   attr_reader :source_data
 
@@ -17,7 +18,11 @@ class OS::RecordProcessor
   end
 
   def metadata
-    @metadata ||= extract_metadata_from_source_data(mapping).merge(SUPPLEMENTARY)
+    @metadata ||= begin
+      metadata = extract_metadata_from_source_data(mapping).merge(SUPPLEMENTARY)
+      metadata["contactPoint"]&.each { |contact_point| contact_point.merge!(CONTACT_POINT_SUPPLEMENT) }
+      metadata
+    end
   end
 
 private
