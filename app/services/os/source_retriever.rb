@@ -39,6 +39,7 @@ private
       limit:,
       startindex:,
       f: :dcat,
+      q: "OGL",
     }.to_query
     response = Faraday.get(url)
     doc = Nokogiri::XML(response.body)

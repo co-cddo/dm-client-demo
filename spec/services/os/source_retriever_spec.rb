@@ -11,12 +11,12 @@ RSpec.describe OS::SourceRetriever, type: :service do
   let(:item_body) { File.read(fixture_file_upload("os_source_data.xml")) }
   let(:get_first_page_of_list) do
     stub_request(:get, described_class::LIST_URL)
-      .with(query: { limit: 100, startindex: 0, f: :dcat })
+      .with(query: { limit: 100, startindex: 0, f: :dcat, q: "OGL" })
       .to_return(body: list_body)
   end
   let(:get_second_page_of_list) do
     stub_request(:get, described_class::LIST_URL)
-      .with(query: { limit: 100, startindex: 100, f: :dcat })
+      .with(query: { limit: 100, startindex: 100, f: :dcat, q: "OGL" })
       .to_return(body: "")
   end
   let(:get_individual_resource) do
