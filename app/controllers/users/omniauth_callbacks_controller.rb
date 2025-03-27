@@ -8,6 +8,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       flash[:notice] = "Successfully logged in via Google"
       sign_in_and_redirect user, event: :authentication
     else
+      Rails.logger.warn "Google login failed: #{auth.info}"
       flash[:alert] = "#{auth.info.email} is not registered. Contact the Data Marketplace team to request access."
       redirect_to new_user_session_path
     end
